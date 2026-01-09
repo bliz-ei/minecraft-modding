@@ -1,6 +1,8 @@
 {
   "itemGroup.examplemod": "Example Mod Tab",
   "block.examplemod.example_block": "Example Block",
+  "block.examplemod.cheese_block": "Cheese Block",
+  "block.examplemod.rubiks_block": "Rubik's Block",
   "item.examplemod.example_item": "Example Item",
 
   "examplemod.configuration.title": "Example Mod Configs",
