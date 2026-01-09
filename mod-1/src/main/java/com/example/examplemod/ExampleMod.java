@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import net.minecraft.world.level.block.SoundType;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -47,8 +48,25 @@ public class ExampleMod {
 
     // Creates a new Block with the id "examplemod:example_block", combining the namespace and path
     public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    public static final DeferredBlock<Block> CHEESE_BLOCK = BLOCKS.registerSimpleBlock("cheese_block",
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .strength(0.5f, 0.6f)
+                    .lightLevel(state -> 4)
+                    .sound(SoundType.STONE)
+    );
+    public static final DeferredBlock<Block> RUBIKS_BLOCK = BLOCKS.registerSimpleBlock("rubiks_block",
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .strength(0.5f, 0.6f)
+                    .lightLevel(state -> 4)
+                    .sound(SoundType.STONE)
+    );
+
     // Creates a new BlockItem with the id "examplemod:example_block", combining the namespace and path
     public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
+    public static final DeferredItem<BlockItem> CHEESE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("cheese_block", CHEESE_BLOCK);
+    public static final DeferredItem<BlockItem> RUBIKS_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("rubiks_block", RUBIKS_BLOCK);
 
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
     public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder()
@@ -61,6 +79,8 @@ public class ExampleMod {
             .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(CHEESE_BLOCK.get());
+                output.accept(RUBIKS_BLOCK.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
