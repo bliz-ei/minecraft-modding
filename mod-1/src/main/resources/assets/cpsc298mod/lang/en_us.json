@@ -1,0 +1,17 @@
+{
+  "itemGroup.examplemod": "Example Mod Tab",
+  "itemGroup.cpsc298mod": "CPSC 298 Mod Tab",
+  "block.cpsc298mod.example_block": "Example Block",
+  "item.cpsc298mod.example_item": "Example Item",
+  "item.cpsc298mod.example_block": "Example Block",
+  "block.cpsc298mod.cheese_block": "Cheese Block",
+  "block.cpsc298mod.rubiks_block": "Rubik's Block",
+
+  "cpsc298mod.configuration.title": "Example Mod Configs",
+  "cpsc298mod.configuration.section.cpsc298mod.common.toml": "Example Mod Configs",
+  "cpsc298mod.configuration.section.cpsc298mod.common.toml.title": "Example Mod Configs",
+  "cpsc298mod.configuration.items": "Item List",
+  "cpsc298mod.configuration.logDirtBlock": "Log Dirt Block",
+  "cpsc298mod.configuration.magicNumberIntroduction": "Magic Number Text",
+  "cpsc298mod.configuration.magicNumber": "Magic Number"
+}

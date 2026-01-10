@@ -1,5 +1,9 @@
 package com.example.examplemod;
 
+import net.minecraft.SharedConstants;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.SoundType;
 import org.slf4j.Logger;
 
@@ -9,10 +13,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -36,7 +36,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 @Mod(ExampleMod.MODID)
 public class ExampleMod {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "examplemod";
+    public static final String MODID = "cpsc298mod";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
@@ -47,12 +47,19 @@ public class ExampleMod {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     // Creates a new Block with the id "examplemod:example_block", combining the namespace and path
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block", (key) -> {
+        LOGGER.info("examplemod:example_block block registered");
+        return new Block(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE)
+                .setId(ResourceKey.create(Registries.BLOCK, key))
+        );
+    });
+
     public static final DeferredBlock<Block> CHEESE_BLOCK = BLOCKS.registerSimpleBlock("cheese_block",
             BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
                     .strength(0.5f, 0.6f)
-                    .lightLevel(state -> 4)
+                    .lightLevel(state -> 15)
                     .sound(SoundType.STONE)
     );
     public static final DeferredBlock<Block> RUBIKS_BLOCK = BLOCKS.registerSimpleBlock("rubiks_block",
@@ -64,13 +71,26 @@ public class ExampleMod {
     );
 
     // Creates a new BlockItem with the id "examplemod:example_block", combining the namespace and path
-    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
+    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", (key) -> {
+        LOGGER.info("{} block item registered", EXAMPLE_BLOCK.getId());
+        return new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()
+                .setId(ResourceKey.create(Registries.ITEM, key))
+        );
+    });
     public static final DeferredItem<BlockItem> CHEESE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("cheese_block", CHEESE_BLOCK);
     public static final DeferredItem<BlockItem> RUBIKS_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("rubiks_block", RUBIKS_BLOCK);
 
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
-    public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder()
-            .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
+    public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.register("example_item", (key) -> {
+        LOGGER.info("examplemod:example_item item registered");
+        return new Item(new Item.Properties().food(new FoodProperties.Builder()
+                .alwaysEdible()
+                .nutrition(1)
+                .saturationModifier(2f)
+                .build())
+                .setId(ResourceKey.create(Registries.ITEM, key))
+        );
+    });
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
@@ -79,9 +99,20 @@ public class ExampleMod {
             .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(EXAMPLE_BLOCK.get());
+            })
+            .build()
+    );
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CPSC298_TAB = CREATIVE_MODE_TABS.register("cpsc298_tab", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.cpsc298mod"))
+            .icon(() -> CHEESE_BLOCK_ITEM.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
                 output.accept(CHEESE_BLOCK.get());
                 output.accept(RUBIKS_BLOCK.get());
-            }).build());
+            })
+            .build()
+    );
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
@@ -119,6 +150,11 @@ public class ExampleMod {
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+
+        // Scavenger hunt
+        LOGGER.info("GOOFY AHH SETUP");
+        LOGGER.info("MINECRAFT VERSION >> {}", SharedConstants.getCurrentVersion().name());
+        LOGGER.info("{} {} {}", EXAMPLE_BLOCK.getId(), EXAMPLE_BLOCK_ITEM.getId(), EXAMPLE_ITEM.getId());
     }
 
     // Add the example block item to the building blocks tab

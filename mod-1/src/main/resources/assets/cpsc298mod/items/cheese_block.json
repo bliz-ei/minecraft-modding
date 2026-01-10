@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "examplemod:block/cheese_block"
+    "model": "cpsc298mod:block/cheese_block"
   }
 }

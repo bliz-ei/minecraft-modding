@@ -26,6 +26,9 @@ public class ExampleModClient {
     static void onClientSetup(FMLClientSetupEvent event) {
         // Some client setup code
         ExampleMod.LOGGER.info("HELLO FROM CLIENT SETUP");
+
+        // Scavenger hunt
+        ExampleMod.LOGGER.info("STRAWBERRY MATCHA");
         ExampleMod.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
 }

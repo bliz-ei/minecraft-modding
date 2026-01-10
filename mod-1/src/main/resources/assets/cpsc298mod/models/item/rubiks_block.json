@@ -1,6 +1,6 @@
 {
   "parent": "block/cube",
   "textures": {
-    "all": "examplemod:block/rubiks_block"
+    "all": "cpsc298mod:block/rubiks_block"
   }
 }

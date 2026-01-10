@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "examplemod:block/rubiks_block"
+    "model": "cpsc298mod:block/rubiks_block"
   }
 }

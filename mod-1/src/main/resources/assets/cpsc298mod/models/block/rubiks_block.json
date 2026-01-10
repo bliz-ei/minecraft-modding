@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "cpsc298mod:block/rubiks_block_white",
+    "up": "cpsc298mod:block/rubiks_block_yellow",
+    "north": "cpsc298mod:block/rubiks_block_green",
+    "south": "cpsc298mod:block/rubiks_block_blue",
+    "west": "cpsc298mod:block/rubiks_block_orange",
+    "east": "cpsc298mod:block/rubiks_block_red"
+  }
+}
