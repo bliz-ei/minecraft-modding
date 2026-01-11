@@ -4,6 +4,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.SlimeBlock;
 import net.minecraft.world.level.block.SoundType;
 import org.slf4j.Logger;
 
@@ -47,13 +48,15 @@ public class ExampleMod {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     // Creates a new Block with the id "examplemod:example_block", combining the namespace and path
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block", (key) -> {
-        LOGGER.info("examplemod:example_block block registered");
-        return new Block(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE)
-                .setId(ResourceKey.create(Registries.BLOCK, key))
-        );
-    });
+    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block",
+            (key) -> {
+                    LOGGER.info("examplemod:example_block block registered");
+                    return new Block(BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .setId(ResourceKey.create(Registries.BLOCK, key))
+                    );
+            }
+    );
 
     public static final DeferredBlock<Block> CHEESE_BLOCK = BLOCKS.registerSimpleBlock("cheese_block",
             BlockBehaviour.Properties.of()
@@ -64,21 +67,34 @@ public class ExampleMod {
     );
     public static final DeferredBlock<Block> RUBIKS_BLOCK = BLOCKS.registerSimpleBlock("rubiks_block",
             BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_YELLOW)
+                    .mapColor(MapColor.COLOR_BLACK)
                     .strength(0.5f, 0.6f)
                     .lightLevel(state -> 4)
                     .sound(SoundType.STONE)
     );
 
+    public static final DeferredBlock<Block> TRAMPOLINE_BLOCK = BLOCKS.register("trampoline_block",
+            (key) -> new SlimeBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BLUE)
+                    .noOcclusion()
+                    .strength(0.1f, 0.1f)
+                    .sound(SoundType.SLIME_BLOCK)
+                    .setId(ResourceKey.create(Registries.BLOCK, key))
+            )
+    );
+
     // Creates a new BlockItem with the id "examplemod:example_block", combining the namespace and path
-    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", (key) -> {
-        LOGGER.info("{} block item registered", EXAMPLE_BLOCK.getId());
-        return new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()
-                .setId(ResourceKey.create(Registries.ITEM, key))
-        );
-    });
+    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block",
+            (key) -> {
+                    LOGGER.info("{} block item registered", EXAMPLE_BLOCK.getId());
+                    return new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()
+                            .setId(ResourceKey.create(Registries.ITEM, key))
+                    );
+            }
+    );
     public static final DeferredItem<BlockItem> CHEESE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("cheese_block", CHEESE_BLOCK);
     public static final DeferredItem<BlockItem> RUBIKS_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("rubiks_block", RUBIKS_BLOCK);
+    public static final DeferredItem<BlockItem> TRAMPOLINE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("trampoline_block", TRAMPOLINE_BLOCK);
 
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
     public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.register("example_item", (key) -> {
@@ -110,6 +126,7 @@ public class ExampleMod {
             .displayItems((parameters, output) -> {
                 output.accept(CHEESE_BLOCK.get());
                 output.accept(RUBIKS_BLOCK.get());
+                output.accept(TRAMPOLINE_BLOCK.get());
             })
             .build()
     );

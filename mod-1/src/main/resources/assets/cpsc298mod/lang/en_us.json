@@ -6,6 +6,7 @@
   "item.cpsc298mod.example_block": "Example Block",
   "block.cpsc298mod.cheese_block": "Cheese Block",
   "block.cpsc298mod.rubiks_block": "Rubik's Block",
+  "block.cpsc298mod.trampoline_block": "Trampoline Block",
 
   "cpsc298mod.configuration.title": "Example Mod Configs",
   "cpsc298mod.configuration.section.cpsc298mod.common.toml": "Example Mod Configs",
